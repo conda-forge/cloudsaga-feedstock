@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cloudsaga-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/cloudsaga-{{ version }}.tar.gz
   sha256: 6efd1fb9bdbcb2b8df1b88e6291a7e92d82e83a8b1602ca207942cbe6aeda1f6
 
 build:
@@ -14,16 +14,16 @@ build:
     - cloudsaga = cloudsaga.cloudsaga:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
     - poetry-core >=1.0.0
-    - python >=3.7
+    - python {{ python_min }}
   run:
     - boto3 >=1.21.7,<2.0.0
-    - python >=3.7
+    - python >={{ python_min }}
 
 test:
   imports:
@@ -33,6 +33,7 @@ test:
     - cloudsaga --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/awslabs/aws-cloudsaga
